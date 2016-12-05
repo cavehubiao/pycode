@@ -1,6 +1,8 @@
 import threading
 import time
 
+"""ceasythread"""
+
 class CSyncObj:
     """Simple sync obj"""
     def __init__(self, container):
