@@ -1,16 +1,21 @@
 import threading
 import time
 
-"""ceasythread"""
-
 class CSyncObj:
     """Simple sync obj"""
     def __init__(self, container):
         self.obj = container
         self.lock = threading.Lock()
+        #print type(self.obj)
         if type(self.obj) is list:
             self.popone_func = getattr(self.obj, "pop")
             self.pushone_func = getattr(self.obj, "append")
+
+    def __len__(self):
+        self.lock.acquire()
+        r = len(self.obj)
+        self.lock.release()
+        return r
 
     def popone(self):
         self.lock.acquire()
@@ -24,8 +29,10 @@ class CSyncObj:
         self.lock.release()
 
 
+
+
 class CThread:
-    """Simple threading use"""
+    """Simple threading use9"""
     def __init__(self, thread_num, thread_func, unlock_args = None, lock_args = None):
         self.thread_num = thread_num
         self.thread_func = thread_func
